@@ -3,11 +3,16 @@ import express from "express"
 import "express-openid-connect"
 import { jwtCheck} from "./utils/auth.js"
 import {client, run} from "./utils/db.js"
+import {getRouter, deleteRouter, postRouter} from "./routes/index.js"
 const app = express();
 
 const port = process.env.PORT || 8080;
 
 app.use(jwtCheck);
+app.use("/get", getRouter)
+app.use("/delete",deleteRouter)
+app.use("/post",postRouter)
+
 
 app.get('/authorized', function (req, res) {
     res.send('Secured Resource');
