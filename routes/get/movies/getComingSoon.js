@@ -8,7 +8,7 @@ router.get("/coming-soon", async (req, res) => {
         if (!location || !language || !shortCountryCode) {
             return res.status(206).send("Missing Information")
         }
-        let comingSoon = getComingSoon(location, language, shortCountryCode)
+        let comingSoon = await getComingSoon(location, language, shortCountryCode)
         if (!comingSoon) {
             return res.status(400).send("N/A")
         }

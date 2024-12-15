@@ -416,8 +416,6 @@ async function getNowPlaying(location, language, shortCountryCode) {
                 }
             }
         }
-        // return res.data
-        //
         let year = new Date().getFullYear()
         const promises = data.knowledge_graph.movies_playing.map(async ({ name }) => {
             let movie = await getMovieDetails(name, year);
@@ -437,6 +435,485 @@ async function getNowPlaying(location, language, shortCountryCode) {
 
 }
 async function getComingSoon(location, language, shortCountryCode) {
+    const url = 'https://serpapi.com/search';
+    const params = {
+        engine: 'google_events',
+        q: `Movies+in+${location}`,
+        hl: 'en',
+        gl: shortCountryCode,
+        api_key: process.env.SERP_API_KEY
+    };
+
+    try {
+        //  const res = await axios.get(url, { params });
+        const data = {
+            "search_metadata": {
+                "id": "675f18d1ac4b4817b18574d7",
+                "status": "Success",
+                "json_endpoint": "https://serpapi.com/searches/ad8bbc1be7c50517/675f18d1ac4b4817b18574d7.json",
+                "created_at": "2024-12-15 17:58:41 UTC",
+                "processed_at": "2024-12-15 17:58:41 UTC",
+                "google_url": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&oq=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&sourceid=chrome&ie=UTF-8",
+                "raw_html_file": "https://serpapi.com/searches/ad8bbc1be7c50517/675f18d1ac4b4817b18574d7.html",
+                "total_time_taken": 1.14
+            },
+            "search_parameters": {
+                "engine": "google",
+                "q": "Coming Soon Movies In Indore,India,Madhya Pradesh",
+                "google_domain": "google.com",
+                "device": "desktop"
+            },
+            "search_information": {
+                "query_displayed": "Coming Soon Movies In Indore,India,Madhya Pradesh",
+                "total_results": 7140000,
+                "time_taken_displayed": 0.39,
+                "organic_results_state": "Results for exact spelling"
+            },
+            "related_questions": [
+                {
+                    "question": "Which new movie is going to release?",
+                    "snippet": "Upcoming Hindi Movies 2024",
+                    "table": [
+                        [
+                            "Release Date",
+                            "Movies Name",
+                            "Cast"
+                        ],
+                        [
+                            "10 January 2025",
+                            "Fateh",
+                            "Sonu Sood, Jacqueline Fernandez, Vijay Raaz, Dibyendu Bhattacharya"
+                        ],
+                        [
+                            "January 2025",
+                            "Ikkis",
+                            "Dharmendra, Jaideep Ahlawat, Agastya Nanda, Ekavali Khanna"
+                        ],
+                        [
+                            "January 2025",
+                            "Azaad",
+                            "Ajay Devgn, Aaman Devgan, Rasha Thadani, Diana Penty"
+                        ]
+                    ],
+                    "formatted": [
+                        {
+                            "release_date": "10 January 2025",
+                            "movies_name": "Fateh",
+                            "cast": "Sonu Sood, Jacqueline Fernandez, Vijay Raaz, Dibyendu Bhattacharya"
+                        },
+                        {
+                            "release_date": "January 2025",
+                            "movies_name": "Ikkis",
+                            "cast": "Dharmendra, Jaideep Ahlawat, Agastya Nanda, Ekavali Khanna"
+                        },
+                        {
+                            "release_date": "January 2025",
+                            "movies_name": "Azaad",
+                            "cast": "Ajay Devgn, Aaman Devgan, Rasha Thadani, Diana Penty"
+                        }
+                    ],
+                    "title": "Upcoming Bollywood Movies | Hindi Movies Releasing 2024",
+                    "link": "https://www.gadgets360.com/entertainment/upcoming-bollywood-movies",
+                    "displayed_link": "https://www.gadgets360.com › entertainment › upcomin...",
+                    "source_logo": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/11f7f799deda70b6ac69fda5e3b7c7ffe100e50bbe5555550e08d73f94cffd61.png",
+                    "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIG5ldyBtb3ZpZSBpcyBnb2luZyB0byByZWxlYXNlPyIsImxrIjoiR2lOM2FHbGphQ0J1WlhjZ2JXOTJhV1VnYVhNZ1oyOXBibWNnZEc4Z2NtVnNaV0Z6WlEiLCJicyI6ImM0MlBzUTZDTUJSRlk5dzZPWkpPTDFFVEpXaXdjVFJwSEoxMEkzRXhCVjZnRVZvQ3hYNkluLUJILUc5T2doQkhaWDduM0hzZk9aRlprTW9vQllVV2NuMlRDTEtDUkV1VmdORlFZb2FpUXU0OElqYW5VX3NmSlNGWmRZbk4wYVFJb1V3U3JBelVSYVR6bHUxVkJRY1ZTOEdkLTVpdHFXZUhPYkoxeUlWNFhjZDNSc19wMm9CV3NDOUttY0hHOTRENWJNdWQxNUY1MUxXX0ZORXJINE9jeVRKSWhlbmdDa1RaYk1LVzdyLU1tNWxOaEVXOGN1ZTVZeTVkMklIOFpQUUciLCJpZCI6ImZjXzBoaGZaOHJrRGR5ZjVOb1ByNG1mc0FJXzMifQ==",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIG5ldyBtb3ZpZSBpcyBnb2luZyB0byByZWxlYXNlPyIsImxrIjoiR2lOM2FHbGphQ0J1WlhjZ2JXOTJhV1VnYVhNZ1oyOXBibWNnZEc4Z2NtVnNaV0Z6WlEiLCJicyI6ImM0MlBzUTZDTUJSRlk5dzZPWkpPTDFFVEpXaXdjVFJwSEoxMEkzRXhCVjZnRVZvQ3hYNkluLUJILUc5T2doQkhaWDduM0hzZk9aRlprTW9vQllVV2NuMlRDTEtDUkV1VmdORlFZb2FpUXU0OElqYW5VX3NmSlNGWmRZbk4wYVFJb1V3U3JBelVSYVR6bHUxVkJRY1ZTOEdkLTVpdHFXZUhPYkoxeUlWNFhjZDNSc19wMm9CV3NDOUttY0hHOTRENWJNdWQxNUY1MUxXX0ZORXJINE9jeVRKSWhlbmdDa1RaYk1LVzdyLU1tNWxOaEVXOGN1ZTVZeTVkMklIOFpQUUciLCJpZCI6ImZjXzBoaGZaOHJrRGR5ZjVOb1ByNG1mc0FJXzMifQ%3D%3D"
+                },
+                {
+                    "question": "Which is the biggest upcoming movie in India?",
+                    "snippet": null,
+                    "title": "Upcoming Indian Movies 2024 - 2026",
+                    "link": "https://www.imdb.com/list/ls023200007/",
+                    "list": [
+                        "Pushpa: The Rule - Part 2. 20243h 21m. ... ",
+                        "Baaghi 4. 2025. ... ",
+                        "Dhruva Natchathiram Chapter 1: Yuddha Kaandam. 2h 25m. ... ",
+                        "Untitled Rishab Shetty & Sudeep Film. DirectorRishab ShettyStarsSudeep.",
+                        "The Vanishing Act. 20242h. ... ",
+                        "Mughal Road.",
+                        "Paani. ... ",
+                        "Takht."
+                    ],
+                    "displayed_link": "https://www.imdb.com › list",
+                    "source_logo": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/11f7f799deda70b6ac69fda5e3b7c7ff4d53b9e0701565ceb923177fd5afd82f.png",
+                    "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIGlzIHRoZSBiaWdnZXN0IHVwY29taW5nIG1vdmllIGluIEluZGlhPyIsImxrIjoiR2l4M2FHbGphQ0JwY3lCMGFHVWdZbWxuWjJWemRDQjFjR052YldsdVp5QnRiM1pwWlNCcGJpQnBibVJwWVEiLCJicyI6ImM0MlBzUTZDTUJSRlk5dzZPWkpPTDFFVEpXaXdjVFJwSEoxMEkzRXhCVjZnRVZvQ3hYNkluLUJILUc5T2doQkhaWDduM0hzZk9aRlprTW9vQllVV2NuMlRDTEtDUkV1VmdORlFZb2FpUXU0OElqYW5VX3NmSlNGWmRZbk4wYVFJb1V3U3JBelVSYVR6bHUxVkJRY1ZTOEdkLTVpdHFXZUhPYkoxeUlWNFhjZDNSc19wMm9CV3NDOUttY0hHOTRENWJNdWQxNUY1MUxXX0ZORXJINE9jeVRKSWhlbmdDa1RaYk1LVzdyLU1tNWxOaEVXOGN1ZTVZeTVkMklIOFpQUUciLCJpZCI6ImZjXzBoaGZaOHJrRGR5ZjVOb1ByNG1mc0FJXzMifQ==",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIGlzIHRoZSBiaWdnZXN0IHVwY29taW5nIG1vdmllIGluIEluZGlhPyIsImxrIjoiR2l4M2FHbGphQ0JwY3lCMGFHVWdZbWxuWjJWemRDQjFjR052YldsdVp5QnRiM1pwWlNCcGJpQnBibVJwWVEiLCJicyI6ImM0MlBzUTZDTUJSRlk5dzZPWkpPTDFFVEpXaXdjVFJwSEoxMEkzRXhCVjZnRVZvQ3hYNkluLUJILUc5T2doQkhaWDduM0hzZk9aRlprTW9vQllVV2NuMlRDTEtDUkV1VmdORlFZb2FpUXU0OElqYW5VX3NmSlNGWmRZbk4wYVFJb1V3U3JBelVSYVR6bHUxVkJRY1ZTOEdkLTVpdHFXZUhPYkoxeUlWNFhjZDNSc19wMm9CV3NDOUttY0hHOTRENWJNdWQxNUY1MUxXX0ZORXJINE9jeVRKSWhlbmdDa1RaYk1LVzdyLU1tNWxOaEVXOGN1ZTVZeTVkMklIOFpQUUciLCJpZCI6ImZjXzBoaGZaOHJrRGR5ZjVOb1ByNG1mc0FJXzMifQ%3D%3D"
+                },
+                {
+                    "question": "Which movie is coming out on April 10, 2024?",
+                    "snippet": "1) Bade Miyan Chote Miyan Produced by Pooja Entertainment in association with AAZ, Bade Miyan Chote Miyan will hit the screens on the occasion of Eid on April 10. It also stars Manushi Chhillar and Alaya F.",
+                    "title": "April 2024 upcoming movies: Bade Miyan Chote Miyan, Maidaan, Amar ...",
+                    "date": "Apr 1, 2024",
+                    "link": "https://www.hindustantimes.com/entertainment/bollywood/april-2024-upcoming-movies-bade-miyan-chote-miyan-maidaan-amar-singh-chamkila-aranmanai-4-and-more-101711877921001.html#:~:text=1)%20Bade%20Miyan%20Chote%20Miyan&text=Produced%20by%20Pooja%20Entertainment%20in,Manushi%20Chhillar%20and%20Alaya%20F.",
+                    "displayed_link": "https://www.hindustantimes.com › bollywood › april-20...",
+                    "source_logo": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/11f7f799deda70b6ac69fda5e3b7c7ff9f69bc443dc5d617a346575a1b36e1a3.png",
+                    "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIG1vdmllIGlzIGNvbWluZyBvdXQgb24gQXByaWwgMTAsIDIwMjQ/IiwibGsiOiJHaXAzYUdsamFDQnRiM1pwWlNCcGN5QmpiMjFwYm1jZ2IzVjBJRzl1SUdGd2NtbHNJREV3SURJd01qUSIsImJzIjoiYzQyUHNRNkNNQlJGWTl3Nk9aSk9MMUVUSldpd2NUUnBISjEwSTNFeEJWNmdFVm9DeFg2SW4tQkgtRzlPZ2hCSFpYN24zSHNmT1pGWmtNb29CWVVXY24yVENMS0NSRXVWZ05GUVlvYWlRdTQ4SWphblVfc2ZKU0ZaZFluTjBhUUlvVXdTckF6VVJhVHpsdTFWQlFjVlM4R2QtNWl0cVdlSE9iSjF5SVY0WGNkM1JzX3Ayb0JXc0M5S21jSEc5NEQ1Yk11ZDE1RjUxTFdfRk5Fckg0T2N5VEpJaGVuZ0NrVFpiTUtXN3ItTW01bE5oRVc4Y3VlNVl5NWQySUg4WlBRRyIsImlkIjoiZmNfMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUlfMyJ9",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoaWNoIG1vdmllIGlzIGNvbWluZyBvdXQgb24gQXByaWwgMTAsIDIwMjQ%2FIiwibGsiOiJHaXAzYUdsamFDQnRiM1pwWlNCcGN5QmpiMjFwYm1jZ2IzVjBJRzl1SUdGd2NtbHNJREV3SURJd01qUSIsImJzIjoiYzQyUHNRNkNNQlJGWTl3Nk9aSk9MMUVUSldpd2NUUnBISjEwSTNFeEJWNmdFVm9DeFg2SW4tQkgtRzlPZ2hCSFpYN24zSHNmT1pGWmtNb29CWVVXY24yVENMS0NSRXVWZ05GUVlvYWlRdTQ4SWphblVfc2ZKU0ZaZFluTjBhUUlvVXdTckF6VVJhVHpsdTFWQlFjVlM4R2QtNWl0cVdlSE9iSjF5SVY0WGNkM1JzX3Ayb0JXc0M5S21jSEc5NEQ1Yk11ZDE1RjUxTFdfRk5Fckg0T2N5VEpJaGVuZ0NrVFpiTUtXN3ItTW01bE5oRVc4Y3VlNVl5NWQySUg4WlBRRyIsImlkIjoiZmNfMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUlfMyJ9"
+                },
+                {
+                    "question": "What movies are being released this week?",
+                    "snippet": "New Movies This Week",
+                    "table": [
+                        [
+                            "Title",
+                            "Distributor",
+                            "Rating"
+                        ],
+                        [
+                            "Kraven the Hunter",
+                            "Sony Pictures Entertainment (SPE)",
+                            "R"
+                        ],
+                        [
+                            "The Lord of the Rings: The War of the Rohirrim",
+                            "Warner Bros.",
+                            "PG-13"
+                        ],
+                        [
+                            "Nickel Boys",
+                            "Amazon/MGM",
+                            "PG-13"
+                        ]
+                    ],
+                    "formatted": [
+                        {
+                            "title": "Kraven the Hunter",
+                            "distributor": "Sony Pictures Entertainment (SPE)",
+                            "rating": "R"
+                        },
+                        {
+                            "title": "The Lord of the Rings: The War of the Rohirrim",
+                            "distributor": "Warner Bros.",
+                            "rating": "PG-13"
+                        },
+                        {
+                            "title": "Nickel Boys",
+                            "distributor": "Amazon/MGM",
+                            "rating": "PG-13"
+                        }
+                    ],
+                    "title": "New Movies Coming Out This Week - Screendollars",
+                    "link": "https://screendollars.com/movies/releases-by-week/",
+                    "displayed_link": "https://screendollars.com › movies › releases-by-week",
+                    "source_logo": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/11f7f799deda70b6ac69fda5e3b7c7ff79534d9a79d7c7dd0751a698dbaf2f0f.png",
+                    "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoYXQgbW92aWVzIGFyZSBiZWluZyByZWxlYXNlZCB0aGlzIHdlZWs/IiwibGsiOiJHaWgzYUdGMElHMXZkbWxsY3lCaGNtVWdZbVZwYm1jZ2NtVnNaV0Z6WldRZ2RHaHBjeUIzWldWciIsImJzIjoiYzQyUHNRNkNNQlJGWTl3Nk9aSk9MMUVUSldpd2NUUnBISjEwSTNFeEJWNmdFVm9DeFg2SW4tQkgtRzlPZ2hCSFpYN24zSHNmT1pGWmtNb29CWVVXY24yVENMS0NSRXVWZ05GUVlvYWlRdTQ4SWphblVfc2ZKU0ZaZFluTjBhUUlvVXdTckF6VVJhVHpsdTFWQlFjVlM4R2QtNWl0cVdlSE9iSjF5SVY0WGNkM1JzX3Ayb0JXc0M5S21jSEc5NEQ1Yk11ZDE1RjUxTFdfRk5Fckg0T2N5VEpJaGVuZ0NrVFpiTUtXN3ItTW01bE5oRVc4Y3VlNVl5NWQySUg4WlBRRyIsImlkIjoiZmNfMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUlfMyJ9",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJTa2M1U210Tk1IcEpSMFJyWWs5NU5XTk5SbFoyWkVKRWVGRnVNMDh6VXpOWFlreFhTVVZ3ZFc1Rk9ITk1UM0ZLVVcwMGNFaHRiVFp2VnpKZlpVMUlXa2g2T0ZKTWNqVXlaWEpMZHpkMlIzbGlVbXBtUTBWTlp6WjZSMVZOYXpWR1VSSVhNR2hvWmxvNGNtdEVaSGxtTlU1dlVISTBiV1p6UVVrYUlrRkdXSEpGWTNGRWFHUnVSa0ZVVDJ4TlVHNXllbmRxVkc1dlNTMDNjMDlTYVZFIiwiZmN2IjoiMyIsImVpIjoiMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUkiLCJxYyI6ImMtTXlUTTdQemN4TFZ5ak96ODlUeU0wdnkwd3RWc2pNQTZLVV9LSlVFSldacUpDYm1KSlJtYWhRVUpTWWtscWNJY0JRLV9pNnRqMEEiLCJxdWVzdGlvbiI6IldoYXQgbW92aWVzIGFyZSBiZWluZyByZWxlYXNlZCB0aGlzIHdlZWs%2FIiwibGsiOiJHaWgzYUdGMElHMXZkbWxsY3lCaGNtVWdZbVZwYm1jZ2NtVnNaV0Z6WldRZ2RHaHBjeUIzWldWciIsImJzIjoiYzQyUHNRNkNNQlJGWTl3Nk9aSk9MMUVUSldpd2NUUnBISjEwSTNFeEJWNmdFVm9DeFg2SW4tQkgtRzlPZ2hCSFpYN24zSHNmT1pGWmtNb29CWVVXY24yVENMS0NSRXVWZ05GUVlvYWlRdTQ4SWphblVfc2ZKU0ZaZFluTjBhUUlvVXdTckF6VVJhVHpsdTFWQlFjVlM4R2QtNWl0cVdlSE9iSjF5SVY0WGNkM1JzX3Ayb0JXc0M5S21jSEc5NEQ1Yk11ZDE1RjUxTFdfRk5Fckg0T2N5VEpJaGVuZ0NrVFpiTUtXN3ItTW01bE5oRVc4Y3VlNVl5NWQySUg4WlBRRyIsImlkIjoiZmNfMGhoZlo4cmtEZHlmNU5vUHI0bWZzQUlfMyJ9"
+                }
+            ],
+            "organic_results": [
+                {
+                    "position": 1,
+                    "title": "List of Movies Releasing This Week in Indore",
+                    "link": "https://in.bookmyshow.com/explore/upcoming-movies-indore",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.bookmyshow.com/explore/upcoming-movies-indore&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECBcQAQ",
+                    "displayed_link": "https://in.bookmyshow.com › explore › upcoming-mov...",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee92c3c5e13274804ecefeecf43ecb819f5.png",
+                    "snippet": "Movies Now Showing in Indore. Pushpa 2: The RuleMufasa: The Lion King ; Upcoming Movies in Indore. Dil AwaaraRifle Club ; Movie Updates and Celebrities. Upcoming ...",
+                    "snippet_highlighted_words": [
+                        "Movies",
+                        "Indore",
+                        "Upcoming Movies",
+                        "Indore",
+                        "Movie",
+                        "Upcoming"
+                    ],
+                    "sitelinks": {
+                        "inline": [
+                            {
+                                "title": "Movies in 3D",
+                                "link": "https://in.bookmyshow.com/explore/3d-upcoming-movies-indore"
+                            },
+                            {
+                                "title": "Movies in 2D",
+                                "link": "https://in.bookmyshow.com/explore/2d-upcoming-movies-indore"
+                            },
+                            {
+                                "title": "Movies in MX4D",
+                                "link": "https://in.bookmyshow.com/explore/mx4d-upcoming-movies-indore"
+                            },
+                            {
+                                "title": "Movies in IMAX 3D",
+                                "link": "https://in.bookmyshow.com/explore/imax-3d-upcoming-movies-indore"
+                            }
+                        ]
+                    },
+                    "source": "BookMyShow"
+                },
+                {
+                    "position": 2,
+                    "title": "Indore Movie Tickets Online Booking & Showtimes near you",
+                    "link": "https://in.bookmyshow.com/explore/movies-indore",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.bookmyshow.com/explore/movies-indore&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECB4QAQ",
+                    "displayed_link": "https://in.bookmyshow.com › explore › movies-indore",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9f504644833db0cedc74b3cc2479e39a1.png",
+                    "snippet": "... Coming Soon · Pushpa 2: The Rule. 8.4. Pushpa 2: The Rule. Pushpa 2: The Rule ... Get ready for upcoming movies in theatres. Don't wait anymore and book ...",
+                    "snippet_highlighted_words": [
+                        "Coming Soon",
+                        "movies"
+                    ],
+                    "sitelinks": {
+                        "inline": [
+                            {
+                                "title": "Upcoming Movies 2024",
+                                "link": "https://in.bookmyshow.com/explore/upcoming-movies-indore"
+                            },
+                            {
+                                "title": "3D Movies in Indore",
+                                "link": "https://in.bookmyshow.com/explore/3d-movies-indore"
+                            },
+                            {
+                                "title": "Cinema In Indore",
+                                "link": "https://in.bookmyshow.com/indore/venue-list"
+                            },
+                            {
+                                "title": "Animation Movies",
+                                "link": "https://in.bookmyshow.com/explore/animation-movies-indore"
+                            }
+                        ]
+                    },
+                    "source": "BookMyShow"
+                },
+                {
+                    "position": 3,
+                    "title": "Now Showing & Upcoming Movies in Indore",
+                    "link": "https://timesofindia.indiatimes.com/entertainment/indore/movies/140",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://timesofindia.indiatimes.com/entertainment/indore/movies/140&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECBUQAQ",
+                    "displayed_link": "https://timesofindia.indiatimes.com › ETimes › Movies",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9a2970885a2c5b118c390ca585d36937d.png",
+                    "snippet": "Upcoming Movies · Welcome To The Jungle · Baby John · Barroz · Mirai · Housefull 5.",
+                    "snippet_highlighted_words": [
+                        "Upcoming Movies"
+                    ],
+                    "source": "Times of India"
+                },
+                {
+                    "position": 4,
+                    "title": "Online Movie Ticket Booking, Showtimes in Indore - Paytm",
+                    "link": "https://paytm.com/movies/indore",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://paytm.com/movies/indore&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECCYQAQ",
+                    "displayed_link": "https://paytm.com › movies › indore",
+                    "thumbnail": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9744e31f138e0f5103198c0354ee2dff2.jpeg",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee95d4b1841c91ebb937158dab5cd6ddf7b.png",
+                    "snippet": "Pushpa 2: The Rule. U/AHindi · Bhool Bhulaiyaa 3 · Mufasa: The Lion King. New Release · Moana 2. 76% · Zero Se Restart. New Release · The Sabarmati Report · The Lord ...",
+                    "sitelinks": {
+                        "inline": [
+                            {
+                                "title": "Ayou Cinema, Rajendra Nagar",
+                                "link": "https://paytm.com/movies/indore/ayou-cinema-rajendra-nagar-indore-c/3145"
+                            },
+                            {
+                                "title": "Fundore Cinemas, Rau, Indore",
+                                "link": "https://paytm.com/movies/indore/fundore-cinemas-rau-indore-c/1014901"
+                            },
+                            {
+                                "title": "Theatres in Indore",
+                                "link": "https://paytm.com/movies/indore/cinema-halls-and-movie-theatre"
+                            }
+                        ]
+                    },
+                    "source": "Paytm"
+                },
+                {
+                    "position": 5,
+                    "title": "INOX Movies in Indore",
+                    "link": "https://www.phoenixcitadel.in/movies",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.phoenixcitadel.in/movies&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECBwQAQ",
+                    "displayed_link": "https://www.phoenixcitadel.in › movies",
+                    "thumbnail": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee92b34a56b6cf81dbce2695a6702b1c7d3.jpeg",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9b3acf7f03b7bef3407f7040411d7a007.png",
+                    "snippet": "Enjoy the Ultimate cinematic experience with the biggest movies in Phoenix Mall, Indore. Latest movies in Indore at INOX multiplex with delightful ...",
+                    "snippet_highlighted_words": [
+                        "movies",
+                        "Indore",
+                        "movies",
+                        "Indore"
+                    ],
+                    "source": "Phoenix Citadel"
+                },
+                {
+                    "position": 6,
+                    "title": "Movies in Indore",
+                    "link": "https://ticketnew.com/movies/indore",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ticketnew.com/movies/indore&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECB8QAQ",
+                    "displayed_link": "https://ticketnew.com › Movie Tickets › Indore",
+                    "thumbnail": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee93c31fea6b93ed305c56823f849662b3c.jpeg",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee95b0b3514de175c2e350db9f1c3a035ca.png",
+                    "snippet": "Mufasa: The Lion King. UHindi, English. Zero Se Restart. New Release. Zero Se Restart. U/AHindi. Upcoming Movies · View All. Viduthalai Part - 2.",
+                    "snippet_highlighted_words": [
+                        "Upcoming Movies"
+                    ],
+                    "source": "ticketnew.com"
+                },
+                {
+                    "position": 7,
+                    "title": "Fortune Cinemas Trinity Mall, Mhow, Indore - Movie Tickets",
+                    "link": "https://paytm.com/movies/indore/fortune-cinemas-trinity-mall-mhow-indore-c/47667",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://paytm.com/movies/indore/fortune-cinemas-trinity-mall-mhow-indore-c/47667&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECDUQAQ",
+                    "displayed_link": "https://paytm.com › Movie Tickets › Indore",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9b632d0386ceeba95a11ad7a91edc9a23.png",
+                    "snippet": "Book your Favourite Movie ; Pushpa 2: The Rule ; Bhool Bhulaiyaa 3 ; Mufasa: The Lion King · Mufasa: The Lion King ; Moana 2 ; Zero Se Restart · Zero Se Restart.",
+                    "snippet_highlighted_words": [
+                        "Movie"
+                    ],
+                    "source": "Paytm"
+                },
+                {
+                    "position": 8,
+                    "title": "INOX C-21 Mall, Sheetal Nagar, Indore",
+                    "link": "https://ticketnew.com/movies/indore/inox-c-21-mall-sheetal-nagar-c/1024421",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ticketnew.com/movies/indore/inox-c-21-mall-sheetal-nagar-c/1024421&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECDsQAQ",
+                    "displayed_link": "https://ticketnew.com › movies › inox-c-21-mall-sheetal...",
+                    "thumbnail": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9fb9ed299d494db11930101ad2b1fbbe5.jpeg",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee93229e2fc506e91ac570115fed0dbd59a.png",
+                    "snippet": "Enjoy newly released movies in Indore through this seamless movie ticket booking website. Catch The Latest Action | Book Movie Tickets Online at Ticketnew.",
+                    "snippet_highlighted_words": [
+                        "movies",
+                        "Indore",
+                        "movie",
+                        "Movie"
+                    ],
+                    "source": "ticketnew.com"
+                },
+                {
+                    "position": 9,
+                    "title": "The Drama Factory (@the_dramafactory)",
+                    "link": "https://www.instagram.com/the_dramafactory/?hl=en",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.instagram.com/the_dramafactory/%3Fhl%3Den&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECDkQAQ",
+                    "displayed_link": "2.8K+ followers",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee98d37a936d38279a0117d0293a6339292.png",
+                    "snippet": "✨ Indore's Premium Movie Experience ⚡Wireless Charging & Cozy Recliners Dolby Atmos Sound & More Book Now ... Photo by The Drama Factory on ...",
+                    "snippet_highlighted_words": [
+                        "Indore's",
+                        "Movie"
+                    ],
+                    "source": "Instagram · the_dramafactory"
+                },
+                {
+                    "position": 10,
+                    "title": "Filming location matching \"indore, madhya pradesh, india ...",
+                    "link": "https://m.imdb.com/search/title/?locations=Indore%2C%20Madhya%20Pradesh%2C%20India",
+                    "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://m.imdb.com/search/title/%3Flocations%3DIndore%252C%2520Madhya%2520Pradesh%252C%2520India&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQFnoECDcQAQ",
+                    "displayed_link": "https://m.imdb.com › search › title › locations=Indore, ...",
+                    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStMDLXjuMomJEKL4wuVG0L8JlNqTyke11zmooYaEdOFpvZ1KNzi0Bu&usqp=CAE&s",
+                    "favicon": "https://serpapi.com/searches/675f18d1ac4b4817b18574d7/images/a6c8481e30155991dd71a9be2e1feee9da9177a4625ba245eafbe72ac65e008a.jpeg",
+                    "snippet": "IMDb's advanced search allows you to run extremely powerful queries over all people and titles in the database. Find exactly what you're looking for!",
+                    "source": "IMDb"
+                }
+            ],
+            "related_searches": [
+                {
+                    "block_position": 1,
+                    "query": "New coming soon movies in indore india madhya pradesh",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=New+coming+soon+movies+in+indore+india+madhya+pradesh&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhREAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=New+coming+soon+movies+in+indore+india+madhya+pradesh"
+                },
+                {
+                    "block_position": 1,
+                    "query": "BookMyShow",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=BookMyShow&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhVEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=BookMyShow"
+                },
+                {
+                    "block_position": 1,
+                    "query": "Upcoming movies in indore",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=Upcoming+movies+in+indore&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhWEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Upcoming+movies+in+indore"
+                },
+                {
+                    "block_position": 1,
+                    "query": "Indore Cinema movie List today",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=Indore+Cinema+movie+List+today&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhZEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Indore+Cinema+movie+List+today"
+                },
+                {
+                    "block_position": 1,
+                    "query": "Indore - Movie Ticket price",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=Indore+-+Movie+Ticket+price&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhYEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Indore+-+Movie+Ticket+price"
+                },
+                {
+                    "block_position": 1,
+                    "query": "AU Cinema: Indore",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=AU+Cinema:+Indore&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhUEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=AU+Cinema%3A+Indore"
+                },
+                {
+                    "block_position": 1,
+                    "query": "Movies in Indore tomorrow",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=Movies+in+Indore+tomorrow&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhXEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Movies+in+Indore+tomorrow"
+                },
+                {
+                    "block_position": 1,
+                    "query": "c21 mall, indore movie ticket price",
+                    "link": "https://www.google.com/search?sca_esv=b5a71d7cacb5517b&q=c21+mall,+indore+movie+ticket+price&sa=X&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ1QJ6BAhSEAE",
+                    "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=c21+mall%2C+indore+movie+ticket+price"
+                }
+            ],
+            "pagination": {
+                "current": 1,
+                "next": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=10&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8NMDegQICRAS",
+                "other_pages": {
+                    "2": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=10&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAE",
+                    "3": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=20&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAG",
+                    "4": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=30&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAI",
+                    "5": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=40&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAK",
+                    "6": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=50&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAM",
+                    "7": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=60&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAO",
+                    "8": "https://www.google.com/search?q=Coming+Soon+Movies+In+Indore,India,Madhya+Pradesh&sca_esv=b5a71d7cacb5517b&ei=0hhfZ8rkDdyf5NoPr4mfsAI&start=70&sa=N&sstk=ATObxK7MLkOdKWr43izEMByMVXgSMJX6wYDYmoWEjr2nDmyJP1jp47GXG5kYCeW0gnisdcG80_sjuUar6rMA329zA-TZjkylUtmiqg&ved=2ahUKEwjKlfeDraqKAxXcD1kFHa_EByYQ8tMDegQICRAQ"
+                }
+            },
+            "serpapi_pagination": {
+                "current": 1,
+                "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=10",
+                "next": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=10",
+                "other_pages": {
+                    "2": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=10",
+                    "3": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=20",
+                    "4": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=30",
+                    "5": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=40",
+                    "6": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=50",
+                    "7": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=60",
+                    "8": "https://serpapi.com/search.json?device=desktop&engine=google&google_domain=google.com&q=Coming+Soon+Movies+In+Indore%2CIndia%2CMadhya+Pradesh&start=70"
+                }
+            }
+        }
+
+        const questions = ["Which new movie is going to release?", "What movies are being released this week?"]
+
+        let year = new Date().getFullYear()
+        let years = []
+        for (let i = year; i <= year + 10; i++) {
+            years.push(i);
+        }
+
+        const relatedQuestions = data.related_questions.filter(({ question }) => questions.includes(question))
+        const movieTitles = relatedQuestions
+            .map(({ formatted }) => {
+                return Array.isArray(formatted)
+                    ? formatted.map(movie => movie.title || movie.movies_name) // Extract titles from formatted
+                    : [];
+            })
+            .flat();
+        const promises = movieTitles.map(async (title) => {
+            let movie = await getMovieDetails(title);
+            if (movie) {
+                return movie;
+            }
+        });
+
+        const resolvedMovies = await Promise.all(promises);
+
+        const filteredMovies = resolvedMovies.filter(movie => movie && movie.Response !== "False" && years.includes(parseInt(movie.Year, 10)));
+
+        return filteredMovies;
+
+
+
+    } catch (error) {
+        console.error('Error fetching events:', error);
+    }
+
 
 }
 
