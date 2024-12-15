@@ -1,0 +1,24 @@
+{
+  "Combos": [
+    {
+      "name": "Regular Tub Salted Popcorn with Medium Coke",
+      "info": "A savory snack made with freshly popped popcorn with a hint of salt and a popular carbonated soft drink known for its sweet and tangy flavor.",
+      "price": "₹559"
+     
+    },
+    {
+        "name": "Regular Tub Salted Popcorn with  Two Medium Coke",
+        "info": "A savory snack made with freshly popped popcorn with a hint of salt and two popular carbonated soft drink known for its sweet and tangy flavor.",
+        "price": "₹659"
+       
+      },
+      {
+        "name": "Regular Tub Salted Popcorn with Two Medium Coke and Nachos with Chessy Dip",
+        "info": "A savory snack made with freshly popped popcorn with a hint of salt with two popular carbonated soft drink known for its sweet and tangy flavor and Crispy tortilla chips topped with melted cheese, jalapeños, sour cream, and salsa.",
+        "price": "₹749"
+       
+      }
+
+    
+]
+}

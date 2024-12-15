@@ -1,0 +1,36 @@
+{
+  "Snacks": [
+    {
+      "name": "Crispy Paneer Burger",
+      "info": "A delicious vegetarian burger made with a grilled paneer patty, fresh lettuce, tomato, onions, and a flavorful sauce, all sandwiched between a soft, toasted bun.",
+      "price": "249"
+     
+    },
+    {
+        "name": "Garden Fresh Veggies Focaccia Sandwitch",
+        "info": "A wholesome sandwich made with a variety of fresh vegetables like cucumber, tomato, lettuce, and cheese, layered between two slices of whole-grain or white bread.",
+        "price": "299"  
+      },
+      {
+        "name": "Large Nachos Combo",
+        "info": "Crispy tortilla chips topped with melted cheese, jalapeños and sour cream.",
+        "price": "269"  
+      },
+      {
+        "name": "Large Nachos With Cheese & Salsa Dip",
+        "info": "Crispy tortilla chips topped with melted cheese, jalapeños, sour cream, and salsa.",
+        "price": "340"  
+      },
+      {
+        "name": "Paneer Tikka Sandwitch",
+        "info": "A flavorful sandwich made with marinated and grilled paneer tikka pieces, fresh vegetables like onions, tomatoes, and lettuce, all tucked between soft bread slices.",
+        "price": "359"  
+      },
+      {
+        "name": "Veggie Mint Chutney Burger",
+        "info": "A delicious veggie burger made with a spiced patty of mashed vegetables, topped with a cooling mint chutney, fresh lettuce, and tomato, all sandwiched in a soft bun.",
+        "price": "219"  
+      }
+
+    ]
+}

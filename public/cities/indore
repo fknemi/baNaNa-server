@@ -1,0 +1,40 @@
+{
+  "cinemas": {
+    "indore": [
+      {
+        "name": "Velocity Miraj",
+        "phoneNo": "6457530425",
+        "location": "https://maps.app.goo.gl/6UzNeFnHJre616VM7?g_st=ac"
+      },
+      {
+        "name": "PVR Treasure Island Mall",
+        "phoneNo": "7646453482",
+        "location": "https://maps.app.goo.gl/D8WDHox8iykiXe9o7?g_st=ac"
+      },
+      {
+        "name": "INOX C21 Mall",
+        "phoneNo": "9886532825",
+        "location": "https://maps.app.goo.gl/1TUN2BYAa8P98TE38?g_st=ac"
+      },
+      {
+        "name": "PVR Phoneix Citadel Mall",
+        "phoneNo": "9457485793",
+        "location": "https://maps.app.goo.gl/JDeUivd29Veer7Q48?g_st=ac"
+      },
+      {
+        "name": "Carnival Cinemas",
+        "phoneNo": "8787987546",
+        "location": "https://maps.app.goo.gl/m48Dp26NSXEpqg2M6?g_st=ac"
+      }
+
+
+    ]
+  }
+}
+
+
+
+
+
+
+

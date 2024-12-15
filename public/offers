@@ -1,0 +1,101 @@
+{
+    "cashback": [
+      {
+        "name": "SBI Debit Card- 10% off upto Rs 100 on transaction",
+        "valid till": "Wed, Mar 19, 2025"
+      },
+      {
+        "name": "IDBI Bank - 20% Off on Transactions",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "IDBI Bank - 25% Off on Transactions",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "DBS Bank Credit Card - 20% off on F&B",
+        "valid till": "Fri, Jan 31, 2025"
+      },
+      {
+        "name": "Kotak PVR INOX Credit Card 20% Off on F & B",
+        "valid till": "Mon, Mar 31, 2025"
+      },
+      {
+        "name": "Kotak PVR INOX Credit Card 5% Off on Tickets",
+        "valid till": "Mon, Mar 31, 2025"
+      },
+      {
+        "name": "ICICI Bank - Debit Card 25% Off on Movie Ticket",
+        "valid till": "Mon, Mar 31, 2025"
+      }
+    ],
+    "bank offers": [
+      {
+        "name": "J&K Bank Mastercard Credit",
+        "valid till": "Wed, Jan 15, 2025"
+      },
+      {
+        "name": "DBS Bank Credit Card - Buy 1 Get 1",
+        "valid till": "Fri, Jan 31, 2025"
+      },
+      {
+        "name": "AU Credit Cards - Rs.100 Off on F&B",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "Federal Bank Signet/Imperio Credit Card 1+1",
+        "valid till": "Wed, Dec 31, 2025"
+      },
+      {
+        "name": "Federal Bank Celesta Credit Card 1+1",
+        "valid till": "Wed, Dec 31, 2025"
+      },
+      {
+        "name": "DBS Bank Debit Card - Buy 1 Get 1",
+        "valid till": "Fri, Jan 31, 2025"
+      },
+      {
+        "name": "J&K Bank Mastercard DC - 50% off Movie-Srinagar",
+        "valid till": "Wed, Jan 15, 2025"
+      },
+      {
+        "name": "J&K Bank Mastercard Debit Card - 50% off Movie",
+        "valid till": "Wed, Jan 15, 2025"
+      },
+      {
+        "name": "Paytm UPI offer",
+        "valid till": "Fri, Jan 31, 2025"
+      },
+      {
+        "name": "Standard Chartered Bank – Buy One Get One",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "Kotak Bank White Reserve Card - Buy 1 Get 1 On Movie",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "CRED Pay Offer Details",
+        "valid till": "Tue, Dec 31, 2024"
+      }
+    ],
+    "normal": [
+      {
+        "name": "Amex Platinum & Centurion – Buy 1 Get 1 Offer",
+        "valid till": "Sun, Aug 31, 2025"
+      },
+      {
+        "name": "Google Wallet Free Popcorn (50 G)",
+        "valid till": "Wed, Jan 15, 2025"
+      },
+      {
+        "name": "Slice UPI offer",
+        "valid till": "Tue, Dec 31, 2024"
+      },
+      {
+        "name": "AU Credit Cards - 20% Off on Movie Ticket",
+        "valid till": "Tue, Dec 31, 2024"
+      }
+    ]
+  }
+  

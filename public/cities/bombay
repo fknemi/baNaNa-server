@@ -1,0 +1,42 @@
+{
+  "cinemas": {
+    "mumbai": [
+      {
+        "name": "metro Inox cinema",
+        "phoneNo": "9845635343",
+        "location": "https://maps.app.goo.gl/9S5aZjbwNUe7XLaq5?g_st=ac"
+      },
+      {
+        "name": "maratha mandir theatre",
+        "phoneNo": "9874345633",
+        "location": "https://maps.app.goo.gl/SJAEmuupvTYpkFM69?g_st=ac"
+      },
+      {
+        "name": "miraj imax wadala",
+        "phoneNo": "8895434563",
+        "location": "https://maps.app.goo.gl/8AEqCCTiYR8xTVLeA?g_st=ac"
+      },
+      {
+        "name": "PVR Le Reve Bandra",
+        "phoneNo": "9378479753",
+        "location": "https://maps.app.goo.gl/S1yPayNagYLPeHLr8?g_st=ac"
+      },
+      {
+        "name": "Cinemax PVR cinemas",
+        "phoneNo": "9875643245",
+        "location": "https://maps.app.goo.gl/VdhcaVYmhmpwWBbi8?g_st=ac "
+      },
+      {
+        "name": "PVR Le Reve Bandra",
+        "phoneNo": "9876547689",
+        "location": "https://maps.app.goo.gl/S1yPayNagYLPeHLr8?g_st=ac"
+      }
+    ]
+  }
+}
+
+
+
+
+ 
+  

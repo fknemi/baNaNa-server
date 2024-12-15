@@ -1,0 +1,37 @@
+
+
+{
+    "cinemas": {
+      "Ahemdabad": [
+        {
+          "name": "Complex Cinemas Parimal garden",
+          "phoneNo": "7465866996",
+          "location": "https://maps.app.goo.gl/XAtgzaJmFKthBJJR6?g_st=ac"
+        },
+        {
+            "name": "LHD Cinemas",
+            "phoneNo": "6786749834",
+            "location": "https://maps.app.goo.gl/TC53E3ijYZMkXhBX6?g_st=ac"
+          },
+          {
+            "name": "Apple Multiplex",
+            "phoneNo": "9893475834",
+            "location": "https://maps.app.goo.gl/sU5C3jxVpTu8nAYc7?g_st=ac"
+          },
+           
+            {
+              "name": "Mango Plus Cinemas",
+              "phoneNo": "6876435356",
+              "location": "https://maps.app.goo.gl/4yEk4ezKRmyJYouY9?g_st=ac"
+            },
+            {
+                "name": "PVR Acropolis",
+                "phoneNo": "9847383797",
+                "location": "https://maps.app.goo.gl/NKUga9HbfMJ6v4b5A?g_st=ac"
+              }
+
+       
+      ]
+    }
+  }
+
