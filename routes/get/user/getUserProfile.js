@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/profile", async () => {
+router.get("/profile", async () => {
 
 
 })

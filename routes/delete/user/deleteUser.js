@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/delete", async () => {
+router.delete("/delete", async () => {
 
 
 })
