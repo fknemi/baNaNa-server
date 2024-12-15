@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getComingSoon } from "../../../utils/movie";
+import { getComingSoon } from "../../../utils/movie.js";
 const router = Router();
 
 router.get("/coming-soon", async (req, res) => {

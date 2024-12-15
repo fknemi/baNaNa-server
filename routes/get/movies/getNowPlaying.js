@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getNowPlaying } from "../../../utils/movie";
+import { getNowPlaying } from "../../../utils/movie.js";
 const router = Router();
 
 router.get("/now-playing", async (req, res) => {
@@ -9,7 +9,7 @@ router.get("/now-playing", async (req, res) => {
         if (!location || !language || !shortCountryCode) {
             return res.status(206).send("Missing Information")
         }
-        let nowPlaying = getNowPlaying(location, language, shortCountryCode)
+        let nowPlaying = await getNowPlaying(location, language, shortCountryCode)
         if (!nowPlaying) {
             return res.status(400).send("N/A")
         }

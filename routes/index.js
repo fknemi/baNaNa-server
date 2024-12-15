@@ -12,7 +12,7 @@ import { router as getFoodAndDrinks } from "./get/cinemas/getFoodAndDrinks.js"
 import { router as getSeatLayout } from "./get/cinemas/getSeatLayout.js"
 
 // Movies
-import { router as getCast } from "./get/movies/getCast.js"
+//import { router as getCast } from "./get/movies/getCast.js"
 import { router as getMovie } from "./get/movies/getMovie.js"
 import { router as getActors } from "./get/movies/getActors.js"
 import { router as getShowtimes } from "./get/movies/getShowtimes.js"
@@ -53,7 +53,7 @@ updateRouter.use("/ticket", cancelTicket)
 // Movies
 
 
-getRouter.use("/movies", getCast)
+//getRouter.use("/movies", getCast)
 getRouter.use("/movies", getMovie)
 getRouter.use("/movies", getActors)
 getRouter.use("/movies", getShowtimes)
