@@ -5,7 +5,7 @@ const router = Router();
 router.get("/now-playing", async (req, res) => {
 
     try {
-        const { location, language, shortCountryCode } = req.body
+        const { location, language, shortCountryCode } = req.query
         if (!location || !language || !shortCountryCode) {
             return res.status(206).send("Missing Information")
         }
