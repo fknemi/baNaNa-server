@@ -8,14 +8,20 @@ export const offerSchema = new Schema({
         trim: true,
         unique: true
     },
+    category: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     validity: {
         type: Date,
         required: true,
     },
- timestamp: {
-    type: String,
-    default: new Date().getTime(),
-  },
+
+    timestamp: {
+        type: String,
+        default: new Date().getTime(),
+    },
 });
 
 

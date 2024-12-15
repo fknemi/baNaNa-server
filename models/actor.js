@@ -10,7 +10,7 @@ const actorSchema = new Schema({
     movies: [
         {
             invoice: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: "Movie",
             },
         }

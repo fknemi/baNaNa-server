@@ -53,13 +53,13 @@ updateRouter.use("/ticket", cancelTicket)
 // Movies
 
 
-getRouter.use("/ticket", getCast)
-getRouter.use("/ticket", getMovie)
-getRouter.use("/ticket", getActors)
-getRouter.use("/ticket", getShowtimes)
-getRouter.use("/ticket", getComingSoon)
-getRouter.use("/ticket", getPromotions)
-getRouter.use("/ticket", getNowPlaying)
+getRouter.use("/movies", getCast)
+getRouter.use("/movies", getMovie)
+getRouter.use("/movies", getActors)
+getRouter.use("/movies", getShowtimes)
+getRouter.use("/movies", getComingSoon)
+getRouter.use("/movies", getPromotions)
+getRouter.use("/movies", getNowPlaying)
 
 
 export {

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { userSchema } from "./user";
+import { userSchema } from "./user.js";
 
 
 export const invoiceSchema = new Schema({

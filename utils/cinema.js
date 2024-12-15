@@ -97,3 +97,8 @@ function getShowtimes(title, location, language, shortCountryCode) {
     //        });
     //    });
 }
+
+
+export {
+    getShowtimes
+}

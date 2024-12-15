@@ -57,6 +57,10 @@ export const userSchema = new Schema({
         type: String,
         default: new Date().getTime(),
     },
+    lastUpdatedAt: {
+        type: String,
+        default: new Date().getTime()
+    }
 });
 
 

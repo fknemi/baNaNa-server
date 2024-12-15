@@ -28,7 +28,10 @@ export const ticketSchema = new Schema({
     scanned: {
         type: Boolean,
         required: true,
-
+    },
+    cancelled: {
+        type: Boolean,
+        required: true,
     },
     price: {
         type: Number,
@@ -58,14 +61,14 @@ export const ticketSchema = new Schema({
     user:
     {
 
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
     },
 
     invoice:
     {
 
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Invoice",
     },
 
