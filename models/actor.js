@@ -3,6 +3,7 @@ import validator from "validator";
 
 
 const actorSchema = new Schema({
+
 });
 
 
