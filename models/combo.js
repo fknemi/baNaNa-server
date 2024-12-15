@@ -1,12 +1,31 @@
 import { Schema, model } from "mongoose";
-import validator from "validator";
 
 
 const comboSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
+    info: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+ timestamp: {
+    type: String,
+    default: new Date().getTime(),
+  },
 });
 
 
 
 
 
-export const Combo = model("Combo", userSchema);
+export const Combo = model("Combo", comboSchema);

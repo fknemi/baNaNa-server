@@ -1,12 +1,28 @@
 import { Schema, model } from "mongoose";
-import validator from "validator";
+import { userSchema } from "./user";
 
 
-const invoiceSchema = new Schema({
+export const invoiceSchema = new Schema({
+    user: userSchema,
+    items: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    total: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+ timestamp: {
+    type: String,
+    default: new Date().getTime(),
+  },
+
 });
 
 
 
 
 
-export const Invoice = model("Invoice", userSchema);
+export const Invoice = model("Invoice", invoiceSchema);

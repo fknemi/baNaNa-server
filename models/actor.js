@@ -1,8 +1,23 @@
 import { Schema, model } from "mongoose";
-import validator from "validator";
 
-
+import { movieSchema } from "./movie";
 const actorSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    movies: [
+        {
+            invoice: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Movie",
+            },
+        }
+
+    ],
+
+
 
 });
 
@@ -10,4 +25,4 @@ const actorSchema = new Schema({
 
 
 
-export const Actor = model("Actor", userSchema);
+export const Actor = model("Actor", actorSchema);

@@ -1,12 +1,78 @@
 import { Schema, model } from "mongoose";
-import validator from "validator";
+import { userSchema } from "./user.js"
+import { invoiceSchema } from "./invoice.js"
 
+export const ticketSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+        trim: true,
+    },
+    timing: {
+        type: String,
+        required: true,
+        trim: true,
+    },
 
-const ticketSchema = new Schema({
+    format: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+
+    scanned: {
+        type: Boolean,
+        required: true,
+
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+
+    QRCode: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    entryTicket: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    expiresAt: {
+        type: Date,
+        required: true,
+        trim: true
+    },
+    timestamp: {
+        type: String,
+        default: new Date().getTime(),
+    },
+
+    user:
+    {
+
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+
+    invoice:
+    {
+
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Invoice",
+    },
+
 });
 
 
 
 
 
-export const Ticket = model("Ticket", userSchema);
+export const Ticket = model("Ticket", ticketSchema);

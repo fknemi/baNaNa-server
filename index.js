@@ -13,6 +13,7 @@ const app = express();
 
 
 //app.use("/get/user", jwtCheck);
+app.use(express.json())
 app.use("/get", getRouter)
 app.use("/delete", deleteRouter)
 app.use("/post", postRouter)
