@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/cancel", async () => {
+router.post("/cancel", async (req,res) => {
 
 
 })

@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/seat-layout", async () => {
+router.get("/seat-layout", async (req,res) => {
 
 
 })

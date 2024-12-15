@@ -7,15 +7,16 @@ import * as http from "http";
 import { Server, Socket } from "socket.io";
 import { client } from "./utils/db.js"
 import mongoose from "mongoose";
+import { getNavatarMiddleware } from "navatar"
 import { getRouter, deleteRouter, postRouter } from "./routes/index.js"
 const app = express();
 
 
-app.use(jwtCheck);
+//app.use("/get/user", jwtCheck);
 app.use("/get", getRouter)
 app.use("/delete", deleteRouter)
 app.use("/post", postRouter)
-
+app.use("/get/avatar/:key.svg",getNavatarMiddleware());
 
 app.get('/authorized', function(req, res) {
     res.send('Secured Resource');
@@ -43,8 +44,5 @@ const startServer = async () => {
     server.listen(PORT, () => {
         console.log(`Server is Listening on http://localhost:${PORT}...`);
     });
-    if (process.env.CREATE_DEFAULT_USER) {
-        createDefaultUser();
-    }
 };
 startServer()

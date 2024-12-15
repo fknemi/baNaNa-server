@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/movie", async () => {
+router.get("/movie", async (req,res) => {
 
 
 })

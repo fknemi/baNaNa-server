@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/showtimes", async () => {
+router.get("/showtimes", async (req,res) => {
 
 
 })

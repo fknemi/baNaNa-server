@@ -2,9 +2,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/register", async () => {
+router.post("/register", async (req, res) => {
 
-
+return res.send("Register User")
 })
 
 export { router };

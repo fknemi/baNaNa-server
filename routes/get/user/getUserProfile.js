@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/profile", async () => {
+router.get("/profile", async (req,res) => {
 
 
 })
