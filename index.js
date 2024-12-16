@@ -9,6 +9,7 @@ import { client } from "./utils/db.js"
 import mongoose from "mongoose";
 import { getNavatarMiddleware } from "navatar"
 import { getRouter, deleteRouter, postRouter } from "./routes/index.js"
+import { pushBeverages } from "./utils/sample.js";
 const app = express();
 
 
@@ -17,7 +18,7 @@ app.use(express.json())
 app.use("/get", getRouter)
 app.use("/delete", deleteRouter)
 app.use("/post", postRouter)
-app.use("/get/avatar/:key.svg",getNavatarMiddleware());
+app.use("/get/avatar/:key.svg", getNavatarMiddleware());
 
 app.get('/authorized', function(req, res) {
     res.send('Secured Resource');
@@ -39,8 +40,19 @@ const startServer = async () => {
         .catch((err) => {
             throw new Error(err);
         });
+
     //io.use(socket_checkUser);
     //io.on("connection", onConnect);
+
+
+
+
+
+
+
+
+
+
 
     server.listen(PORT, () => {
         console.log(`Server is Listening on http://localhost:${PORT}...`);

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "PVR Cinemas The Nexus Mall",
+        "phoneNo": "7874560983",
+        "location": "https://maps.app.goo.gl/ffxCm7yYp1YTFh659?g_st=ac",
+
+        "city": "bangalore"
+    },
+    {
+        "name": "Urvashi Cinemas",
+        "phoneNo": "9875436759",
+        "location": "https://maps.app.goo.gl/kbw9gegJFEd5fMFFA?g_st=ac",
+
+        "city": "bangalore"
+    },
+    {
+        "name": "PVR Cinemas Phoenix Marketcity Mall, Bengaluru",
+        "phoneNo": "7659843520",
+        "location": "https://maps.app.goo.gl/uxDKVTqPyvjRSWoY9?g_st=ac",
+
+        "city": "bangalore"
+    },
+    {
+        "name": "Anjan Cinemas 4K 3D",
+        "phoneNo": "8765940345",
+        "location": "https://maps.app.goo.gl/41F6BYx68RZ3PVXo6?g_st=ac",
+
+        "city": "bangalore"
+    }
+]

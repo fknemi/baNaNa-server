@@ -8,6 +8,11 @@ const cinemaSchema = new Schema({
         trim: true,
         unique: true
     },
+    city: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     phoneNo: {
         type: Number,
         required: true,
@@ -20,10 +25,11 @@ const cinemaSchema = new Schema({
 
     },
 
-     timestamp: {
-    type: String,
-    default: new Date().getTime(),
-  },
+
+    timestamp: {
+        type: String,
+        default: new Date().getTime(),
+    },
 
 });
 

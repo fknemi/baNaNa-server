@@ -1,0 +1,37 @@
+[
+    {
+        "name": "PVR Pacific Mall Subhash Nagar",
+        "phoneNo": "7468678674",
+        "location": "https://maps.app.goo.gl/LtF553X2ZZ6NisgWA?g_st=ac",
+
+        "city": "delhi"
+    },
+    {
+        "name": "PVR Plaza CP Delhi",
+        "phoneNo": "7869549834",
+        "location": "https://maps.app.goo.gl/r8bKXuNhVjcew9MTA?g_st=ac",
+
+        "city": "delhi"
+    },
+    {
+        "name": "PVR Director's Cut Ambience Mall",
+        "phoneNo": "9532347653",
+        "location": "https://maps.app.goo.gl/Gc6WVTsNs4wSLXqM9?g_st=ac",
+
+        "city": "delhi"
+    },
+    {
+        "name": "PVR Premiere",
+        "phoneNo": "6876999654",
+        "location": "https://maps.app.goo.gl/Gc6WVTsNs4wSLXqM9?g_st=ac",
+
+        "city": "delhi"
+    },
+    {
+        "name": "INOX Nehru Place",
+        "phoneNo": "9847656523",
+        "location": "https://maps.app.goo.gl/ZeNnsva1twincvTR8?g_st=ac",
+
+        "city": "delhi"
+    }
+]
