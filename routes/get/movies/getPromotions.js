@@ -6,14 +6,7 @@ const router = Router();
 router.get("/promotions", async (req, res) => {
     try {
         // Aggregate offers grouped by category
-        const offersByCategory = await Offer.aggregate([
-            {
-                $group: {
-                    _id: "$category",
-                    offers: { $push: "$$ROOT" },
-                },
-            },
-        ]);
+        const offersByCategory = await Offer.find()
 
         return res.status(200).json({ success: true, data: offersByCategory });
     } catch (error) {
